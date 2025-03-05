@@ -9,10 +9,17 @@
     
     <Grid>
         <StackPanel HorizontalAlignment="Center">
-            <Button>Button 1</Button>
-            <Button>Button 2</Button>
-            <Button>Button 3</Button>
-            <Button>Button 4</Button>
+            <Button FontSize="15"
+                Margin="0,20,8,0"
+                Height="40"
+                VerticalAlignment="Center"
+                VerticalContentAlignment="Center"
+                BorderThickness="2" Background="{x:Null}">
+                <Button.Content>
+                    <TextBlock HorizontalAlignment="Center">Start Task</TextBlock>
+                </Button.Content>
+            </Button>
+            
         </StackPanel>
     </Grid>
 </Window>

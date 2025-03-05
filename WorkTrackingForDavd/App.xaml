@@ -5,14 +5,27 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <LinearGradientBrush x:Key="GrayBlueGradientBrush" StartPoint="0,0" EndPoint="1,1">
-            <GradientStop Color="DarkGray" Offset="0" />
-            <GradientStop Color="#CCCCFF" Offset="0.5" />
-            <GradientStop Color="DarkGray" Offset="1" />
+            <GradientStop Color="#FF0000" Offset="0" />
+            <GradientStop Color="#F64949" Offset="0.5" />
+            <GradientStop Color="#FF0000" Offset="1" />
         </LinearGradientBrush>
         <Style TargetType="{x:Type Button}">
             <Setter Property="Background" Value="{StaticResource GrayBlueGradientBrush}" />
-            <Setter Property="Width" Value="80" />
+            <Setter Property="Width" Value="200" />
             <Setter Property="Margin" Value="10" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" ClipToBounds="True">
+                            <Rectangle x:Name="outerRectangle" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stroke="{TemplateBinding Background}" RadiusX="10" RadiusY="10" StrokeThickness="2" Fill="Transparent" />
+                            <Rectangle x:Name="innerRectangle" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stroke="Transparent" StrokeThickness="10" Fill="{TemplateBinding Background}" RadiusX="10" RadiusY="10" />
+                            <DockPanel Name="myContentPresenterDockPanel">
+                                <ContentPresenter x:Name="myContentPresenter" Margin="10" Content="{TemplateBinding  Content}" TextBlock.Foreground="Black" />
+                            </DockPanel>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
     </Application.Resources>
 </Application>
