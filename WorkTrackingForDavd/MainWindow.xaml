@@ -6,7 +6,14 @@
         xmlns:local="clr-namespace:WorkTrackingForDavd"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    
     <Grid>
-
+        <StackPanel HorizontalAlignment="Center">
+            <Button>Button 1</Button>
+            <Button>Button 2</Button>
+            <Button>Button 3</Button>
+            <Button>Button 4</Button>
+        </StackPanel>
     </Grid>
 </Window>
+
