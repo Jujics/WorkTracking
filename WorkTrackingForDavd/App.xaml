@@ -23,6 +23,16 @@
                                 <ContentPresenter x:Name="myContentPresenter" Margin="10" Content="{TemplateBinding  Content}" TextBlock.Foreground="Black" />
                             </DockPanel>
                         </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="innerRectangle" Property="Fill" Value="#FFD3D3D3" /> 
+                                <Setter TargetName="myContentPresenter" Property="TextBlock.Foreground" Value="White" /> 
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="innerRectangle" Property="Fill" Value="#FFA9A9A9" /> 
+                                <Setter TargetName="myContentPresenter" Property="TextBlock.Foreground" Value="Black" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
