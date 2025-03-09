@@ -23,6 +23,10 @@
                     <TextBlock HorizontalAlignment="Center">Start Task</TextBlock>
                 </Button.Content>
             </Button>
+            <TextBlock Text="Task name" FontSize="14" Margin="0,0,0,5"/>
+            <TextBox Width="500" 
+                     Text="{Binding Notes, UpdateSourceTrigger=PropertyChanged}" 
+                     ToolTip="Type your notes here"/>
         </StackPanel>
         <StackPanel HorizontalAlignment="Left">
             <TextBlock Text="{Binding CurrentTimeString}" 
