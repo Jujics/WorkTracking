@@ -20,4 +20,14 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
     }
+    
+    private void Start_Task(object sender, RoutedEventArgs e)
+    {
+        // Access the TextBox's text
+        string userInput = InputTask.Text;
+
+        // Do something with the user input
+        MessageBox.Show($"User input: {userInput}");
+    }
+    
 }
