@@ -25,9 +25,9 @@ public partial class MainWindow : Window
     {
         // Access the TextBox's text
         string userInput = InputTask.Text;
-
+        string startTime = DateTime.Now.ToString("HH:mm:ss");
         // Do something with the user input
-        MessageBox.Show($"User input: {userInput}");
+        MessageBox.Show($"User input: {userInput} at {startTime}");
     }
     
 }
