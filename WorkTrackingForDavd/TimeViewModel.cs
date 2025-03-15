@@ -41,6 +41,8 @@ public class TimeViewModel : INotifyPropertyChanged
         get { return _currentTime.ToString("HH:mm:ss"); }
     }
 
+
+
     public event PropertyChangedEventHandler? PropertyChanged;
 
     protected virtual void OnPropertyChanged(String propertyName)
