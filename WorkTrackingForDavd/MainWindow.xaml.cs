@@ -9,6 +9,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.ComponentModel;
+using System.Globalization;
 using System.Runtime.CompilerServices;
 
 namespace WorkTrackingForDavd;
@@ -18,7 +19,9 @@ namespace WorkTrackingForDavd;
 /// </summary>
 public partial class MainWindow : Window, INotifyPropertyChanged
 {
-    //private int taskNumber;
+    #region Fields
+    
+    
     private Visibility _blockOneVisibility = Visibility.Hidden;
     public Visibility BlockOneVisibility
     {
@@ -32,6 +35,40 @@ public partial class MainWindow : Window, INotifyPropertyChanged
             }
         }
     }
+    
+    private String _blockOneTime = string.Empty;
+    public String BlockOneTime
+    {
+        get => _blockOneTime;
+        set
+        {
+            if (_blockOneTime != value)
+            {
+                _blockOneTime = value;
+                OnPropertyChanged();
+            }
+        }
+        
+    }
+    private String _blockOneTitle = string.Empty;
+
+    public String BlockOneTitle
+    {
+        get => _blockOneTitle;
+        set
+        {
+            if (_blockOneTitle != value)
+            {
+                _blockOneTitle = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+    
+    
+    #endregion
+    
+    
     public MainWindow()
     {
         InitializeComponent();
@@ -43,7 +80,8 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         string userInput = InputTask.Text;
         string startTime = DateTime.Now.ToString("HH:mm:ss");
         BlockOneVisibility = Visibility.Visible;
-        MessageBox.Show($"User input: {userInput} at {startTime}");
+        BlockOneTime = "Debut de la tache " + startTime;
+        BlockOneTitle = userInput;
     }
     
     public event PropertyChangedEventHandler PropertyChanged;

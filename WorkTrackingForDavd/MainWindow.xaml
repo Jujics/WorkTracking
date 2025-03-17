@@ -31,8 +31,8 @@
                     ToolTip="Type your notes here"/>
             <TextBlock Text="Taches en cours" FontSize="14" VerticalAlignment="Center" Margin="200,20,200,0" ></TextBlock>
             <DockPanel Name="BlockTask1" Visibility= "{Binding BlockOneVisibility}" Background="#8a8a8a" Margin="0,10,0,10">
-                <TextBlock Text="UneTache"></TextBlock>
-                <TextBlock Text="Debut de la tache : 16:14:60"
+                <TextBlock Text="{Binding BlockOneTitle}"></TextBlock>
+                <TextBlock Text="{Binding BlockOneTime}"
                            Margin="0,15,0,0"></TextBlock>
                 <Button
                     FontSize="10"
