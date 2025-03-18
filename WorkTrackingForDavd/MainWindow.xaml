@@ -47,9 +47,9 @@
                     </Button.Content>
                 </Button>
             </DockPanel>
-            <DockPanel Name="BlockTask2" Visibility="Hidden" Background="#8a8a8a" Margin="0,10,0,10">
-                <TextBlock Text="UneTache"></TextBlock>
-                <TextBlock Text="Debut de la tache : 16:14:60"
+            <DockPanel Name="BlockTask2" Visibility="{Binding BlockTwoVisibility}" Background="#8a8a8a" Margin="0,10,0,10">
+                <TextBlock Text="{Binding BlockTwoTitle}"></TextBlock>
+                <TextBlock Text="{Binding BlockTwoTime}"
                            Margin="0,15,0,0"></TextBlock>
                 <Button
                     FontSize="10"
@@ -64,9 +64,9 @@
                     </Button.Content>
                 </Button>
             </DockPanel>
-            <DockPanel Name="BlockTask3" Visibility="Hidden" Background="#8a8a8a" Margin="0,10,0,10">
-                <TextBlock Text="UneTache"></TextBlock>
-                <TextBlock Text="Debut de la tache : 16:14:60"
+            <DockPanel Name="BlockTask3" Visibility="{Binding BlockThreeVisibility}" Background="#8a8a8a" Margin="0,10,0,10">
+                <TextBlock Text="{Binding BlockThreeTitle}"></TextBlock>
+                <TextBlock Text="{Binding BlockThreeTime}"
                            Margin="0,15,0,0"></TextBlock>
                 <Button
                     FontSize="10"

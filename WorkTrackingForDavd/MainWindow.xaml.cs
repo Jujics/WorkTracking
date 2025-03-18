@@ -20,7 +20,8 @@ namespace WorkTrackingForDavd;
 public partial class MainWindow : Window, INotifyPropertyChanged
 {
     #region Fields
-    
+
+    #region Visibility
     
     private Visibility _blockOneVisibility = Visibility.Hidden;
     public Visibility BlockOneVisibility
@@ -36,6 +37,38 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         }
     }
     
+    private Visibility _blockTwoVisibility = Visibility.Hidden;
+    public Visibility BlockTwoVisibility
+    {
+        get => _blockTwoVisibility;
+        set
+        {
+            if (_blockTwoVisibility != value)
+            {
+                _blockTwoVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+    
+    private Visibility _blockThreeVisibility = Visibility.Hidden;
+    public Visibility BlockThreeVisibility
+    {
+        get => _blockThreeVisibility;
+        set
+        {
+            if (_blockThreeVisibility != value)
+            {
+                _blockThreeVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+    
+    #endregion
+    
+    #region TimeString
+    
     private String _blockOneTime = string.Empty;
     public String BlockOneTime
     {
@@ -48,10 +81,40 @@ public partial class MainWindow : Window, INotifyPropertyChanged
                 OnPropertyChanged();
             }
         }
-        
     }
+    
+    private String _blockTwoTime = string.Empty;
+    public String BlockTwoTime
+    {
+        get => _blockTwoTime;
+        set
+        {
+            if (_blockTwoTime != value)
+            {
+                _blockTwoTime = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+    
+    private String _blockThreeTime = string.Empty;
+    public String BlockThreeTime
+    {
+        get => _blockThreeTime;
+        set
+        {
+           if (BlockThreeTime != value)
+           {
+               _blockThreeTime = value;
+               OnPropertyChanged();
+           }
+        }
+    }
+    
+    #endregion
+    
+    #region TitleString
     private String _blockOneTitle = string.Empty;
-
     public String BlockOneTitle
     {
         get => _blockOneTitle;
@@ -65,6 +128,47 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         }
     }
     
+    private String _blockTwoTitle = string.Empty;
+    public String BlockTwoTitle
+    {
+        get => _blockTwoTitle;
+        set
+        {
+            if (_blockTwoTitle != value)
+            {
+                _blockTwoTitle = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+    
+    private String _blockThreeTitle = string.Empty;
+    public String BlockThreeTitle
+    {
+        get => _blockThreeTitle;
+        set
+        {
+            if (_blockThreeTitle != value)
+            {
+                _blockThreeTitle = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+    #endregion
+
+    private int _index = 0;
+    public int Index
+    {
+        get => _index;
+        set
+        {
+            if (_index != value)
+            {
+                _index = value;
+            }
+        }
+    }
     
     #endregion
     
@@ -79,9 +183,30 @@ public partial class MainWindow : Window, INotifyPropertyChanged
     {
         string userInput = InputTask.Text;
         string startTime = DateTime.Now.ToString("HH:mm:ss");
-        BlockOneVisibility = Visibility.Visible;
-        BlockOneTime = "Debut de la tache " + startTime;
-        BlockOneTitle = userInput;
+        switch (Index)
+        {
+            case 0 :
+                BlockOneVisibility = Visibility.Visible;
+                BlockOneTime = "Debut de la tache " + startTime;
+                BlockOneTitle = userInput;
+                _index++;
+                break;
+            case 1 :
+                BlockTwoVisibility = Visibility.Visible;
+                BlockTwoTime = "Debut de la tache " + startTime;
+                BlockTwoTitle = userInput;
+                _index++;
+                break;
+            case 2 :
+                BlockThreeVisibility = Visibility.Visible;
+                BlockThreeTime = "Debut de la tache " + startTime;
+                BlockThreeTitle = userInput;
+                _index++;
+                break;
+            default:
+                MessageBox.Show("Trop de taches a la fois");
+                break;
+        }
     }
     
     public event PropertyChangedEventHandler PropertyChanged;
