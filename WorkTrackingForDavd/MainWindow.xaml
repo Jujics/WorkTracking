@@ -41,7 +41,8 @@
                     Width="100"
                     VerticalAlignment="Center"
                     VerticalContentAlignment="Center"
-                    BorderThickness="2">
+                    BorderThickness="2"
+                    Click="Stop_Task_One">
                     <Button.Content>
                         <TextBlock HorizontalAlignment="Center">Finir la Tache</TextBlock>
                     </Button.Content>
@@ -58,7 +59,8 @@
                     Width="100"
                     VerticalAlignment="Center"
                     VerticalContentAlignment="Center"
-                    BorderThickness="2">
+                    BorderThickness="2"
+                    Click="Stop_Task_Two">
                     <Button.Content>
                         <TextBlock HorizontalAlignment="Center">Finir la Tache</TextBlock>
                     </Button.Content>
@@ -69,13 +71,15 @@
                 <TextBlock Text="{Binding BlockThreeTime}"
                            Margin="0,15,0,0"></TextBlock>
                 <Button
+                    Tag="ButtonBlockThree"
                     FontSize="10"
                     Margin="0,10,-150,0"
                     Height="32"
                     Width="100"
                     VerticalAlignment="Center"
                     VerticalContentAlignment="Center"
-                    BorderThickness="2">
+                    BorderThickness="2"
+                    Click="Stop_Task_Three">
                     <Button.Content>
                         <TextBlock HorizontalAlignment="Center">Finir la Tache</TextBlock>
                     </Button.Content>

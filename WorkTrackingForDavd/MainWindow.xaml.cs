@@ -172,7 +172,6 @@ public partial class MainWindow : Window, INotifyPropertyChanged
     
     #endregion
     
-    
     public MainWindow()
     {
         InitializeComponent();
@@ -187,24 +186,85 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         {
             case 0 :
                 BlockOneVisibility = Visibility.Visible;
-                BlockOneTime = "Debut de la tache " + startTime;
+                BlockOneTime = "Debut de la tache  " + startTime;
                 BlockOneTitle = userInput;
                 _index++;
                 break;
             case 1 :
                 BlockTwoVisibility = Visibility.Visible;
-                BlockTwoTime = "Debut de la tache " + startTime;
+                BlockTwoTime = "Debut de la tache  " + startTime;
                 BlockTwoTitle = userInput;
                 _index++;
                 break;
             case 2 :
                 BlockThreeVisibility = Visibility.Visible;
-                BlockThreeTime = "Debut de la tache " + startTime;
+                BlockThreeTime = "Debut de la tache  " + startTime;
                 BlockThreeTitle = userInput;
                 _index++;
                 break;
             default:
                 MessageBox.Show("Trop de taches a la fois");
+                break;
+        }
+    }
+
+    #region Stop task Args
+    private void Stop_Task_One(object sender, RoutedEventArgs e)
+    {
+        StopTask(1);
+    }
+    private void Stop_Task_Two(object sender, RoutedEventArgs e)
+    {
+        StopTask(2);
+    }
+    private void Stop_Task_Three(object sender, RoutedEventArgs e)
+    {
+        StopTask(3);
+    }
+    #endregion
+    
+    private void StopTask(int indexOfSender)
+    {
+        string endTime = DateTime.Now.ToString("HH:mm:ss");
+        switch (indexOfSender)
+        {
+            case 1:
+                Index--;
+                string startTime = BlockOneTime.Split(" ")[1];
+                TimeSpan startTimeSpan = TimeSpan.Parse(startTime);
+                TimeSpan endTimeSpan = TimeSpan.Parse(endTime);
+                MessageBox.Show($"Start time {startTime}, End time {endTime} \n {endTimeSpan - startTimeSpan } Duration");
+                
+
+                BlockOneVisibility = BlockTwoVisibility;
+                BlockOneTime = BlockTwoTime;
+                BlockOneTitle = BlockTwoTitle;
+
+                if (BlockTwoVisibility == Visibility.Hidden)
+                {
+                    BlockOneVisibility = Visibility.Hidden;
+                    return;
+                }
+
+                BlockTwoVisibility = BlockThreeVisibility;
+                BlockTwoTime = BlockThreeTime;
+                BlockTwoTitle = BlockThreeTitle;
+
+                BlockThreeVisibility = Visibility.Hidden;
+                break;
+            case 2:
+                Index--;
+                
+                BlockTwoVisibility = BlockThreeVisibility;
+                BlockTwoTime = BlockThreeTime;
+                BlockTwoTitle = BlockThreeTitle;
+
+                BlockThreeVisibility = Visibility.Hidden;
+                break;
+            case 3:
+                BlockThreeVisibility = Visibility.Hidden;
+                break;
+            default:
                 break;
         }
     }
@@ -215,5 +275,6 @@ public partial class MainWindow : Window, INotifyPropertyChanged
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
+
     
 }
