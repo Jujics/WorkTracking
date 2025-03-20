@@ -179,7 +179,8 @@ public partial class MainWindow : Window, INotifyPropertyChanged
     private Calendar _calendar;
     
     #endregion
-    
+
+    #region OnStart
     public MainWindow()
     {
         InitializeComponent();
@@ -219,12 +220,18 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         }
     }
     
+    #endregion
+    
+    #region OnStop
     protected override void OnClosing(CancelEventArgs e)
     {
         SaveCalendarToFile();
         base.OnClosing(e);
     }
     
+    #endregion
+    
+    #region ButtonClicEvents
     private void Start_Task(object sender, RoutedEventArgs e)
     {
         string userInput = InputTask.Text;
@@ -320,7 +327,9 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         }
         Index--;
     }
-
+    #endregion
+    
+    #region SaveCalendarToFile
     private void LogTask(string title, string startTime, string endTime, TimeSpan duration)
     {
         var calendarEvent = new CalendarEvent
@@ -350,10 +359,14 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         }
     }
     
+    #endregion
+
+    #region PropertyChange
     public event PropertyChangedEventHandler PropertyChanged;
 
     protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
+    #endregion
 }
