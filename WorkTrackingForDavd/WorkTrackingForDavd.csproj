@@ -8,4 +8,8 @@
         <UseWPF>true</UseWPF>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Ical.Net" Version="5.0.0-daily.5" />
+    </ItemGroup>
+
 </Project>

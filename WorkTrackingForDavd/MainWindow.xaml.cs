@@ -10,7 +10,13 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.ComponentModel;
 using System.Globalization;
+using System.IO;
 using System.Runtime.CompilerServices;
+using Ical.Net;
+using Ical.Net.CalendarComponents;
+using Ical.Net.DataTypes;
+using Calendar = Ical.Net.Calendar;
+using Ical.Net.CalendarComponents;
 
 namespace WorkTrackingForDavd;
 
@@ -169,6 +175,8 @@ public partial class MainWindow : Window, INotifyPropertyChanged
             }
         }
     }
+
+    private Calendar _calendar;
     
     #endregion
     
@@ -176,6 +184,45 @@ public partial class MainWindow : Window, INotifyPropertyChanged
     {
         InitializeComponent();
         DataContext = this;
+        _calendar = new Calendar();
+        _calendar.AddTimeZone("Europe/Paris");
+
+        LoadCalendarFromFile();
+    }
+
+    private void LoadCalendarFromFile()
+    {
+        string filePath = "TasksCalendar.ics";
+
+        if (File.Exists(filePath))
+        {
+            try
+            {
+                string fileContent = File.ReadAllText(filePath);
+                _calendar = Calendar.Load(fileContent);
+                if (_calendar == null)
+                { 
+                    throw new InvalidOperationException("Calendar could not be deserialized.");
+                }
+            }
+            catch (Exception ex)
+            {
+                _calendar = new Calendar();
+                _calendar.AddTimeZone("Europe/Paris");
+                MessageBox.Show($"Failed to load calendar: {ex.Message}. A new calendar has been created.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        else
+        {
+            _calendar = new Calendar();
+            _calendar.AddTimeZone("Europe/Paris");
+        }
+    }
+    
+    protected override void OnClosing(CancelEventArgs e)
+    {
+        SaveCalendarToFile();
+        base.OnClosing(e);
     }
     
     private void Start_Task(object sender, RoutedEventArgs e)
@@ -223,49 +270,83 @@ public partial class MainWindow : Window, INotifyPropertyChanged
     }
     #endregion
     
-    private void StopTask(int indexOfSender)
+    private void StopTask(int taskIndex)
     {
         string endTime = DateTime.Now.ToString("HH:mm:ss");
-        switch (indexOfSender)
+        string startTime = string.Empty;
+        TimeSpan duration = TimeSpan.Zero;
+        switch (taskIndex)
         {
             case 1:
-                Index--;
-                string startTime = BlockOneTime.Split(" ")[1];
-                TimeSpan startTimeSpan = TimeSpan.Parse(startTime);
-                TimeSpan endTimeSpan = TimeSpan.Parse(endTime);
-                MessageBox.Show($"Start time {startTime}, End time {endTime} \n {endTimeSpan - startTimeSpan } Duration");
-                
-
-                BlockOneVisibility = BlockTwoVisibility;
-                BlockOneTime = BlockTwoTime;
-                BlockOneTitle = BlockTwoTitle;
-
-                if (BlockTwoVisibility == Visibility.Hidden)
-                {
-                    BlockOneVisibility = Visibility.Hidden;
-                    return;
-                }
-
-                BlockTwoVisibility = BlockThreeVisibility;
-                BlockTwoTime = BlockThreeTime;
-                BlockTwoTitle = BlockThreeTitle;
-
-                BlockThreeVisibility = Visibility.Hidden;
+                startTime = BlockOneTime.Split(" ")[1];
+                duration = DateTime.Parse(endTime) - DateTime.Parse(startTime);
+                LogTask(BlockOneTitle, startTime, endTime, duration);
+                ShiftTasks(1);
                 break;
             case 2:
-                Index--;
-                
-                BlockTwoVisibility = BlockThreeVisibility;
-                BlockTwoTime = BlockThreeTime;
-                BlockTwoTitle = BlockThreeTitle;
-
-                BlockThreeVisibility = Visibility.Hidden;
+                startTime = BlockTwoTime.Split(" ")[1];
+                duration = DateTime.Parse(endTime) - DateTime.Parse(startTime);
+                LogTask(BlockTwoTitle, startTime, endTime, duration);
+                ShiftTasks(2);
                 break;
             case 3:
+                startTime = BlockThreeTime.Split(" ")[1];
+                duration = DateTime.Parse(endTime) - DateTime.Parse(startTime);
+                LogTask(BlockThreeTitle, startTime, endTime, duration);
                 BlockThreeVisibility = Visibility.Hidden;
                 break;
-            default:
-                break;
+        }
+        MessageBox.Show($"Task {taskIndex} stopped.\nDuration: {duration:hh\\:mm\\:ss}");
+    }
+
+    private void ShiftTasks(int stoppedTaskIndex)
+    {
+        if (stoppedTaskIndex == 1)
+        {
+            BlockOneVisibility = BlockTwoVisibility;
+            BlockOneTime = BlockTwoTime;
+            BlockOneTitle = BlockTwoTitle;
+            BlockTwoVisibility = BlockThreeVisibility;
+            BlockTwoTime = BlockThreeTime;
+            BlockTwoTitle = BlockThreeTitle;
+            BlockThreeVisibility = Visibility.Hidden;
+        }
+        else if (stoppedTaskIndex == 2)
+        {
+            BlockTwoVisibility = BlockThreeVisibility;
+            BlockTwoTime = BlockThreeTime;
+            BlockTwoTitle = BlockThreeTitle;
+            BlockThreeVisibility = Visibility.Hidden;
+        }
+        Index--;
+    }
+
+    private void LogTask(string title, string startTime, string endTime, TimeSpan duration)
+    {
+        var calendarEvent = new CalendarEvent
+        {
+            Summary = title,
+            Start = new CalDateTime(DateTime.Parse(startTime)),
+            End = new CalDateTime(DateTime.Parse(endTime)),
+        };
+        _calendar.Events.Add(calendarEvent);
+        SaveCalendarToFile();
+    }
+    private void SaveCalendarToFile()
+    {
+        var serializer = new Ical.Net.Serialization.CalendarSerializer();
+        string icalString = serializer.SerializeToString(_calendar);
+        
+        string filePath = "TasksCalendar.ics";
+        
+        try
+        {
+            File.WriteAllText(filePath, icalString);
+            MessageBox.Show($"Calendar saved to {filePath}", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Failed to save calendar: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
     
@@ -275,6 +356,4 @@ public partial class MainWindow : Window, INotifyPropertyChanged
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
-
-    
 }

@@ -92,6 +92,19 @@
                        VerticalAlignment="Center"
                        FontSize="12"> 
             </TextBlock>
+            <Button
+                Tag="ButtonBlockThree"
+                FontSize="10"
+                Margin="0,20,0,0"
+                Height="32"
+                Width="100"
+                VerticalAlignment="Center"
+                VerticalContentAlignment="Center"
+                BorderThickness="2">
+                <Button.Content>
+                    <TextBlock HorizontalAlignment="Center">Page Track</TextBlock>
+                </Button.Content>
+            </Button>
         </StackPanel>
     </Grid>
 </Window>
