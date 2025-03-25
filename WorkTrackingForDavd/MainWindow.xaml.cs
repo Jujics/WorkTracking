@@ -327,6 +327,12 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         }
         Index--;
     }
+    
+    private void SwitchPage(object sender, RoutedEventArgs e)
+    {
+        MainFrame.Navigate(new IcalView());
+    }
+
     #endregion
     
     #region SaveCalendarToFile
@@ -369,4 +375,5 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
     #endregion
+    
 }
