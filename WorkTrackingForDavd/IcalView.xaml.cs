@@ -49,6 +49,11 @@ public partial class IcalView : Page
                (calendarEvent.Start.Value <= targetStart && calendarEvent.End.Value >= targetEnd);
     }
 
+    private void OnCloseView 
+    {
+        //todo
+    }
+
     public event PropertyChangedEventHandler PropertyChanged;
 
     protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
