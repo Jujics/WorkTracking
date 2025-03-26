@@ -15,7 +15,8 @@
               Width="100"
               VerticalAlignment="Center"
               VerticalContentAlignment="Center"
-              BorderThickness="2">
+              BorderThickness="2"
+              Click="OnCloseView">
               <Button.Content>
                   <TextBlock HorizontalAlignment="Center">Page Track</TextBlock>
               </Button.Content>
