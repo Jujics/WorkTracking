@@ -48,6 +48,13 @@ public partial class IcalView : Page
                (calendarEvent.End.Value > targetStart && calendarEvent.End.Value <= targetEnd) || 
                (calendarEvent.Start.Value <= targetStart && calendarEvent.End.Value >= targetEnd);
     }
+
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
     
     public class CalendarEventCl
     {
