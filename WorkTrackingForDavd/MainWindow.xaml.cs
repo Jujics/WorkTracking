@@ -330,7 +330,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
     
     private void SwitchPage(object sender, RoutedEventArgs e)
     {
-        MainFrame.Navigate(new IcalView());
+        MainFrame.Navigate(new IcalView(MainFrame));
     }
 
     #endregion
