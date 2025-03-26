@@ -49,7 +49,7 @@ public partial class IcalView : Page
                (calendarEvent.Start.Value <= targetStart && calendarEvent.End.Value >= targetEnd);
     }
 
-    private void OnCloseView 
+    private void OnCloseView()
     {
         //todo
     }
