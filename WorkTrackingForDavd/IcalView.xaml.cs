@@ -67,14 +67,12 @@ public partial class IcalView : Page
 
     private void OnCloseView(object sender, RoutedEventArgs e)
     {
-        if (_navigationFrame != null && _navigationFrame.CanGoBack)
-        {
-            _navigationFrame.GoBack();
-        }
-        else if (NavigationService != null && NavigationService.CanGoBack)
-        {
-            NavigationService.GoBack();
-        }
+        
+        NavigationService?.Navigate(null);
+    
+        NavigationService?.Navigate(new Uri("MainPage.xaml", UriKind.Relative));
+    
+        _navigationFrame?.Navigate(null);
     }
 
     public event PropertyChangedEventHandler PropertyChanged;
