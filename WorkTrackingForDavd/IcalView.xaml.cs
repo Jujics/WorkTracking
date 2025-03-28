@@ -22,7 +22,7 @@ namespace WorkTrackingForDavd;
 
 public partial class IcalView : Page
 {
-
+    
     private Frame _navigationFrame;
     public IcalView(Frame navigationFrame = null)
     {
@@ -59,10 +59,21 @@ public partial class IcalView : Page
     private static bool IsEventOnDate(CalendarEvent calendarEvent, DateTime targetDate)
     {
         var targetStart = targetDate.Date;
-        var targetEnd = targetDate.Date;
-        return (calendarEvent.Start.Value >= targetStart && calendarEvent.Start.Value < targetEnd) || 
-               (calendarEvent.End.Value > targetStart && calendarEvent.End.Value <= targetEnd) || 
-               (calendarEvent.Start.Value <= targetStart && calendarEvent.End.Value >= targetEnd);
+        var targetEnd = targetDate.Date.AddDays(1);
+    
+        
+        var eventStart = calendarEvent.Start.Value;
+        var eventEnd = calendarEvent.End.Value;
+    
+        // For all-day events, iCal.Net sets time to 00:00:00
+        if (calendarEvent.IsAllDay)
+        {
+            return eventStart.Date <= targetDate.Date && eventEnd.Date > targetDate.Date;
+        }
+    
+        return (eventStart >= targetStart && eventStart < targetEnd) || 
+               (eventEnd > targetStart && eventEnd <= targetEnd) || 
+               (eventStart <= targetStart && eventEnd >= targetEnd);
     }
 
     private void OnCloseView(object sender, RoutedEventArgs e)
@@ -73,6 +84,40 @@ public partial class IcalView : Page
         NavigationService?.Navigate(new Uri("MainPage.xaml", UriKind.Relative));
     
         _navigationFrame?.Navigate(null);
+    }
+    private void OnChoose(object sender, RoutedEventArgs e)
+    {
+        if (DatePicker.SelectedDate.HasValue)
+        {
+            DateTime selectedDate = DatePicker.SelectedDate.Value;
+            string icalFilePath = "TasksCalendar.ics";
+            var events = CalendarEvents(icalFilePath, selectedDate);
+            try
+            {
+                StringBuilder message = new StringBuilder();
+                message.AppendLine($"Events on {selectedDate.ToShortDateString()}:");
+        
+                if (events.Count == 0)
+                {
+                    message.AppendLine("No events found for this date.");
+                }
+                else
+                {
+                    foreach (var evt in events)
+                    {
+                        message.AppendLine($"- {evt.Summary}");
+                        message.AppendLine($"  From: {evt.Start.ToShortTimeString()} To: {evt.End.ToShortTimeString()}");
+                        message.AppendLine();
+                    }
+                }
+
+                MessageBox.Show(message.ToString(), "Calendar Events");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Error");
+            }
+        }
     }
 
     public event PropertyChangedEventHandler PropertyChanged;
@@ -88,5 +133,5 @@ public partial class IcalView : Page
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
     }
-    
+
 }

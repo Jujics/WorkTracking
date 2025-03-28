@@ -9,6 +9,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -17,6 +18,7 @@ using Ical.Net.CalendarComponents;
 using Ical.Net.DataTypes;
 using Calendar = Ical.Net.Calendar;
 using Ical.Net.CalendarComponents;
+using Path = System.IO.Path;
 
 namespace WorkTrackingForDavd;
 
@@ -367,6 +369,30 @@ public partial class MainWindow : Window, INotifyPropertyChanged
     
     #endregion
 
+    #region other button interaction
+
+    private void OpenExplorer(object sender, RoutedEventArgs e)
+    {
+        string appDirectory = AppDomain.CurrentDomain.BaseDirectory;
+    
+        string relativePath = "TasksCalendar.ics";
+    
+        string fullPath = Path.Combine(appDirectory, relativePath);
+    
+        // Verify file exists
+        if (File.Exists(fullPath))
+        {
+            Process.Start("explorer.exe", $"/select,\"{fullPath}\"");
+        }
+        else
+        {
+            MessageBox.Show("File not found: " + fullPath);
+        }
+    }
+    
+
+    #endregion
+
     #region PropertyChange
     public event PropertyChangedEventHandler PropertyChanged;
 
@@ -375,5 +401,5 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
     #endregion
-    
+
 }

@@ -4,4 +4,5 @@
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AVisibility_002Ecs_002Fl_003AC_0021_003FUsers_003Fbasti_003FAppData_003FRoaming_003FJetBrains_003FRider2024_002E3_003Fresharper_002Dhost_003FDecompilerCache_003Fdecompiler_003F9cf37d661c0a4543b599722d090f3d28838938_003Ffe_003F480e60ec_003FVisibility_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
   &lt;Assembly Path="C:\Users\basti\.nuget\packages\ical.net\5.0.0-pre.39\lib\net8.0\Ical.Net.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Users\basti\.nuget\packages\system.windows.forms.datavisualization\1.0.0-prerelease.20110.1\ref\netcoreapp3.0\System.Windows.Forms.DataVisualization.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String></wpf:ResourceDictionary>

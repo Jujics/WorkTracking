@@ -12,7 +12,7 @@
     </Window.DataContext>
     
     <Grid>
-        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" />
+        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Panel.ZIndex="1000"/>
         <StackPanel HorizontalAlignment="Center">
             <Button FontSize="15"
                 Margin="0,20,8,0"
@@ -93,7 +93,6 @@
                        FontSize="12"> 
             </TextBlock>
             <Button
-                Tag="ButtonBlockThree"
                 FontSize="10"
                 Margin="0,20,0,0"
                 Height="32"
@@ -104,6 +103,19 @@
                 Click="SwitchPage">
                 <Button.Content>
                     <TextBlock HorizontalAlignment="Center">Page Track</TextBlock>
+                </Button.Content>
+            </Button>
+            <Button
+                FontSize="10"
+                Margin="0,20,0,0"
+                Height="32"
+                Width="100"
+                VerticalAlignment="Center"
+                VerticalContentAlignment="Center"
+                BorderThickness="2"
+                Click="OpenExplorer">
+                <Button.Content>
+                    <TextBlock HorizontalAlignment="Center">Get ical</TextBlock>
                 </Button.Content>
             </Button>
         </StackPanel>

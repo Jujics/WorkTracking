@@ -8,20 +8,41 @@
       Title="IcalView" Height="450" Width="800">
     
     <Grid>
-          <Button
-              Tag="ButtonBlockThree"
-              FontSize="10"
-              Margin="0,20,0,0"
-              Height="32"
-              Width="100"
-              VerticalAlignment="Center"
-              VerticalContentAlignment="Center"
-              BorderThickness="2"
-              Click="OnCloseView">
-              <Button.Content>
-                  <TextBlock HorizontalAlignment="Center">Page Track</TextBlock>
-              </Button.Content>
-          </Button>
-      </Grid>
+        <Border>
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" 
+                        Background="#6b6b6b"
+                        Margin="10">
+                <DatePicker Name="DatePicker" SelectedDate="2025-12-31"></DatePicker>
+                <Button
+                    Tag="ButtonBlockThree"
+                    FontSize="10"
+                    Margin="0,20,0,0"
+                    Height="32"
+                    Width="100"
+                    VerticalAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    BorderThickness="2"
+                    Click="OnChoose">
+                    <Button.Content>
+                        <TextBlock HorizontalAlignment="Center">Choose Date</TextBlock>
+                    </Button.Content>
+                </Button>
+                <Button
+                      Tag="ButtonBlockThree"
+                      FontSize="10"
+                      Margin="0,20,0,0"
+                      Height="32"
+                      Width="100"
+                      VerticalAlignment="Center"
+                      VerticalContentAlignment="Center"
+                      BorderThickness="2"
+                      Click="OnCloseView">
+                      <Button.Content>
+                          <TextBlock HorizontalAlignment="Center">Close</TextBlock>
+                      </Button.Content>
+                  </Button>
+            </StackPanel>
+        </Border>
+    </Grid>
     
 </Page>
