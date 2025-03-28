@@ -379,7 +379,6 @@ public partial class MainWindow : Window, INotifyPropertyChanged
     
         string fullPath = Path.Combine(appDirectory, relativePath);
     
-        // Verify file exists
         if (File.Exists(fullPath))
         {
             Process.Start("explorer.exe", $"/select,\"{fullPath}\"");
