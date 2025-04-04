@@ -28,6 +28,7 @@ public partial class IcalView : Page
     {
         InitializeComponent();
         _navigationFrame = navigationFrame;
+        GenerateColorBoxes();
     }
 
     public static List<CalendarEventCl> CalendarEvents(string icalFilePath, DateTime targetDate)
@@ -117,6 +118,86 @@ public partial class IcalView : Page
                 MessageBox.Show($"Error: {ex.Message}", "Error");
             }
         }
+    }
+    
+    private void GenerateColorBoxes()
+    {
+        CalSearch.StoreNumberEvent();
+        ColorBoxContainer.Children.Clear();
+        for (int i = 0; i < 370; i++)
+        {
+            int daysAgo = 370 - i;
+            int eventCount = CalSearch.eventListYear[i];
+            Color boxColor = GetColorForEventCount(eventCount);
+            DateTime currentDate = DateTime.Today.AddDays(-daysAgo);
+        
+            var tooltipContent = new StackPanel();
+            tooltipContent.Children.Add(new TextBlock { 
+                Text = currentDate.ToString("MMM dd, yyyy (dddd)"), 
+                FontWeight = FontWeights.Bold 
+            });
+            tooltipContent.Children.Add(new TextBlock { 
+                Text = $"Events: {eventCount}" 
+            });
+        
+            Border box = new Border
+            {
+                Width = 10,
+                Height = 10,
+                Margin = new Thickness(1),
+                Background = new SolidColorBrush(boxColor),
+                ToolTip = tooltipContent,
+                Cursor = Cursors.Hand
+            };
+            box.MouseEnter += (s, e) => box.Opacity = 0.7;
+            box.MouseLeave += (s, e) => box.Opacity = 1.0;
+
+            ColorBoxContainer.Children.Add(box);
+        }
+        GenerateTodayColorBoxes();
+        
+    }
+
+    private void GenerateTodayColorBoxes()
+    {
+        var dayTooltipContent = new StackPanel();
+        dayTooltipContent.Children.Add(new TextBlock { 
+            Text = "Today", 
+            FontWeight = FontWeights.Bold 
+        });
+        dayTooltipContent.Children.Add(new TextBlock { 
+            Text = $"Events: {CalSearch.eventListYear[CalSearch.eventListYear.Count-1]}" 
+        });
+        
+        Border tdBox = new Border
+        {
+            Width = 10,
+            Height = 10,
+            Margin = new Thickness(1),
+            Background = new SolidColorBrush(GetColorForEventCount(CalSearch.eventListYear[CalSearch.eventListYear.Count-1])),
+            ToolTip = dayTooltipContent,
+            Cursor = Cursors.Hand
+        };
+        tdBox.MouseEnter += (s, e) => tdBox.Opacity = 0.7;
+        tdBox.MouseLeave += (s, e) => tdBox.Opacity = 1.0;
+
+        ColorBoxContainer.Children.Add(tdBox);
+    }
+
+    private Color GetColorForEventCount(int eventCount)
+    {
+        if (eventCount == 0)
+            return Colors.LightGray;
+        else if (eventCount == 1)
+            return Colors.LightGreen;
+        else if (eventCount == 2)
+            return Colors.Green;
+        else if (eventCount == 3)
+            return Colors.GreenYellow;
+        else if (eventCount == 4)
+            return Colors.Orange;
+        else
+            return Colors.Red;
     }
 
     public event PropertyChangedEventHandler PropertyChanged;

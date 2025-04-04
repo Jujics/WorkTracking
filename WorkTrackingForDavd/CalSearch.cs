@@ -27,8 +27,9 @@ public class CalSearch
     public static void StoreNumberEvent()
     {
         int i = 0;
+        eventListYear.Clear();
         
-        for(DateTime date = DateTime.Today - TimeSpan.FromDays(365); date <= DateTime.Today; date = date.AddDays(1))
+        for(DateTime date = DateTime.Today - TimeSpan.FromDays(370); date <= DateTime.Today; date = date.AddDays(1))
         {
             eventListYear.Add(CalendarEvents("TasksCalendar.ics", date));
             Console.WriteLine(eventListYear[i]);
@@ -39,7 +40,6 @@ public class CalSearch
     public static int CalendarEvents(string icalFilePath, DateTime targetDate)
     {
         int howManyEventInDay = 0;
-        var events = new List<CalendarEventCl>();
 
         if (!File.Exists(icalFilePath))
         {
@@ -52,12 +52,6 @@ public class CalSearch
         {
             if (IsEventOnDate(calendarEvent, targetDate))
             {
-                events.Add(new CalendarEventCl
-                {
-                    Summary = calendarEvent.Summary,
-                    Start = calendarEvent.Start.Value,
-                    End = calendarEvent.End.Value,
-                });
                 howManyEventInDay++;
             }
         }
@@ -82,12 +76,5 @@ public class CalSearch
                (eventEnd > targetStart && eventEnd <= targetEnd) || 
                (eventStart <= targetStart && eventEnd >= targetEnd);
     }
-
     
-    public class CalendarEventCl
-    {
-        public string Summary { get; set; }
-        public DateTime Start { get; set; }
-        public DateTime End { get; set; }
-    }
 }

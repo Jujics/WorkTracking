@@ -27,6 +27,11 @@
                         <TextBlock HorizontalAlignment="Center">Choose Date</TextBlock>
                     </Button.Content>
                 </Button>
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                    <WrapPanel x:Name="ColorBoxContainer" Margin="10">
+                        <!-- Boxes will be generated in code-behind -->
+                    </WrapPanel>
+                </ScrollViewer>
                 <Button
                       Tag="ButtonBlockThree"
                       FontSize="10"
