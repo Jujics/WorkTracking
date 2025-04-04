@@ -20,18 +20,25 @@ using Ical.Net.CalendarComponents;
 
 namespace WorkTrackingForDavd;
 
-public partial class IcalView : Page
+public class CalSearch
 {
-    
-    private Frame _navigationFrame;
-    public IcalView(Frame navigationFrame = null)
-    {
-        InitializeComponent();
-        _navigationFrame = navigationFrame;
-    }
+    public static List<int> eventListYear = new List<int>();
 
-    public static List<CalendarEventCl> CalendarEvents(string icalFilePath, DateTime targetDate)
+    public static void StoreNumberEvent()
     {
+        int i = 0;
+        
+        for(DateTime date = DateTime.Today - TimeSpan.FromDays(365); date <= DateTime.Today; date = date.AddDays(1))
+        {
+            eventListYear.Add(CalendarEvents("TasksCalendar.ics", date));
+            Console.WriteLine(eventListYear[i]);
+            i++;
+        }
+    }
+    
+    public static int CalendarEvents(string icalFilePath, DateTime targetDate)
+    {
+        int howManyEventInDay = 0;
         var events = new List<CalendarEventCl>();
 
         if (!File.Exists(icalFilePath))
@@ -51,11 +58,12 @@ public partial class IcalView : Page
                     Start = calendarEvent.Start.Value,
                     End = calendarEvent.End.Value,
                 });
+                howManyEventInDay++;
             }
         }
-        return events.OrderBy(e => e.Start).ToList();
+        return howManyEventInDay;
     }
-
+    
     private static bool IsEventOnDate(CalendarEvent calendarEvent, DateTime targetDate)
     {
         var targetStart = targetDate.Date;
@@ -75,56 +83,6 @@ public partial class IcalView : Page
                (eventStart <= targetStart && eventEnd >= targetEnd);
     }
 
-    private void OnCloseView(object sender, RoutedEventArgs e)
-    {
-        
-        NavigationService?.Navigate(null);
-    
-        NavigationService?.Navigate(new Uri("MainPage.xaml", UriKind.Relative));
-    
-        _navigationFrame?.Navigate(null);
-    }
-    private void OnChoose(object sender, RoutedEventArgs e)
-    {
-        if (DatePicker.SelectedDate.HasValue)
-        {
-            DateTime selectedDate = DatePicker.SelectedDate.Value;
-            string icalFilePath = "TasksCalendar.ics";
-            var events = CalendarEvents(icalFilePath, selectedDate);
-            try
-            {
-                StringBuilder message = new StringBuilder();
-                message.AppendLine($"Events on {selectedDate.ToShortDateString()}:");
-        
-                if (events.Count == 0)
-                {
-                    message.AppendLine("No events found for this date.");
-                }
-                else
-                {
-                    foreach (var evt in events)
-                    {
-                        message.AppendLine($"- {evt.Summary}");
-                        message.AppendLine($"  From: {evt.Start.ToShortTimeString()} To: {evt.End.ToShortTimeString()}");
-                        message.AppendLine();
-                    }
-                }
-
-                MessageBox.Show(message.ToString(), "Calendar Events");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error: {ex.Message}", "Error");
-            }
-        }
-    }
-
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
     
     public class CalendarEventCl
     {
@@ -132,5 +90,4 @@ public partial class IcalView : Page
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
     }
-
 }

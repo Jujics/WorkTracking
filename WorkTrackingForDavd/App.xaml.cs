@@ -16,8 +16,9 @@ namespace WorkTrackingForDavd
                 Current.Shutdown();
                 return;
             }
-
+            
             base.OnStartup(e);
+            CalSearch.StoreNumberEvent();
             var mainWindow = new MainWindow();
             _trayManager = new SystemTrayManager(mainWindow);
             mainWindow.Closing += (s, args) =>
