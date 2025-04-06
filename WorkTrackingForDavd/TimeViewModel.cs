@@ -1,8 +1,5 @@
 ﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows.Threading;
-using System;
-using System.ComponentModel;
 
 namespace WorkTrackingForDavd;
 
