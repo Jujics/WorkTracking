@@ -13,7 +13,7 @@ namespace WorkTrackingForDavd;
 /// <summary>
 /// Interaction logic for MainWindow.xaml
 /// </summary>
-public partial class MainWindow : Window, INotifyPropertyChanged
+public partial class MainWindow : INotifyPropertyChanged
 {
     #region Fields
 
@@ -153,16 +153,13 @@ public partial class MainWindow : Window, INotifyPropertyChanged
     }
     #endregion
 
-    private int _index = 0;
+    private int _index;
     public int Index
     {
         get => _index;
         set
         {
-            if (_index != value)
-            {
-                _index = value;
-            }
+            _index = value;
         }
     }
 
@@ -270,7 +267,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
     private void StopTask(int taskIndex)
     {
         string endTime = DateTime.Now.ToString("HH:mm:ss");
-        string startTime = string.Empty;
+        string startTime;
         TimeSpan duration = TimeSpan.Zero;
         switch (taskIndex)
         {
@@ -381,9 +378,9 @@ public partial class MainWindow : Window, INotifyPropertyChanged
     #endregion
 
     #region PropertyChange
-    public event PropertyChangedEventHandler PropertyChanged;
+    public event PropertyChangedEventHandler? PropertyChanged;
 
-    protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    protected void OnPropertyChanged([CallerMemberName] string propertyName = null!)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }

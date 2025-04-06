@@ -118,7 +118,7 @@ public partial class IcalView : Page
         for (int i = 0; i < 370; i++)
         {
             int daysAgo = 370 - i;
-            int eventCount = CalSearch.eventListYear[i];
+            int eventCount = CalSearch.EventListYear[i];
             Color boxColor = GetColorForEventCount(eventCount);
             DateTime currentDate = DateTime.Today.AddDays(-daysAgo);
         
@@ -157,7 +157,7 @@ public partial class IcalView : Page
             FontWeight = FontWeights.Bold 
         });
         dayTooltipContent.Children.Add(new TextBlock { 
-            Text = $"Events: {CalSearch.eventListYear[CalSearch.eventListYear.Count-1]}" 
+            Text = $"Events: {CalSearch.EventListYear[CalSearch.EventListYear.Count-1]}" 
         });
         
         Border tdBox = new Border
@@ -165,7 +165,7 @@ public partial class IcalView : Page
             Width = 10,
             Height = 10,
             Margin = new Thickness(1),
-            Background = new SolidColorBrush(GetColorForEventCount(CalSearch.eventListYear[CalSearch.eventListYear.Count-1])),
+            Background = new SolidColorBrush(GetColorForEventCount(CalSearch.EventListYear[CalSearch.EventListYear.Count-1])),
             ToolTip = dayTooltipContent,
             Cursor = Cursors.Hand
         };

@@ -6,17 +6,16 @@ namespace WorkTrackingForDavd;
 
 public class CalSearch
 {
-    public static List<int> eventListYear = new List<int>();
+    public static readonly List<int> EventListYear = new List<int>();
 
     public static void StoreNumberEvent()
     {
-        int i = 0;
-        eventListYear.Clear();
+        
+        EventListYear.Clear();
         
         for(DateTime date = DateTime.Today - TimeSpan.FromDays(370); date <= DateTime.Today; date = date.AddDays(1))
         {
-            eventListYear.Add(CalendarEvents("TasksCalendar.ics", date));
-            i++;
+            EventListYear.Add(CalendarEvents("TasksCalendar.ics", date));
         }
     }
     
